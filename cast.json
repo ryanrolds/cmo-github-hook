@@ -1,0 +1,9 @@
+{
+    "name": "cmo-gibhub-hook",
+    "description": "CheckMeONCE deployer",
+    "version": "0.0.1",
+    "type": "shell",
+    "entry_file": "run.sh",
+    "template_files": [],
+    "data_files": []
+}

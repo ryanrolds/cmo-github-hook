@@ -1,0 +1,7 @@
+{
+  "name": "cmo-github-hook",
+  "version": "0.0.1",
+  "dependencies": {
+    "github-hook": "~1.0.1"
+  }
+}
