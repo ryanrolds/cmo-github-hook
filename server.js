@@ -100,7 +100,7 @@ app.post('/', function(req, res, next) {
             childProcess.exec('git commit -m "[Deployinating] Inc version" package.json cast.json', opts, callback);
           },
           function(callback) { // Push changes
-            childProcess.exec('git push', opts, function(err, out, err) {
+            childProcess.exec('git push', opts, function(error, out, err) {
               if (error) {
                 return callback(error);
               }
