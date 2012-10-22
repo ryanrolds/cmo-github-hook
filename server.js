@@ -75,7 +75,14 @@ app.post('/', function(req, res, next) {
             childProcess.exec('cast bundles upload -r checkmeonce-dev', opts, callback);
           },
           function(callback) { // Upgrade checkmeonce instance on dev server to version
-            childProcess.exec('cast instances upgrade -r checkmeonce-dev checkmeonce ' + version, opts, callback);
+            childProcess.exec('cast instances upgrade -r checkmeonce-dev checkmeonce ' + version, opts, function(error, out, err) {
+              if (error) {
+                return callback(error);
+              }
+
+              console.log('Deployed', version, 'to dev');
+              callback(null, out, err);
+            });
           },
           function(callback) {
             version = semver.inc(version, 'patch');
@@ -93,7 +100,14 @@ app.post('/', function(req, res, next) {
             childProcess.exec('git commit -m "[Deployinating] Inc version" package.json cast.json', opts, callback);
           },
           function(callback) { // Push changes
-            childProcess.exec('git push', opts, callback);
+            childProcess.exec('git push', opts, function(err, out, err) {
+              if (error) {
+                return callback(error);
+              }
+
+              console.log('Inc version to', version);
+              callback(null, out, err);
+            });
           }
         ],
         function(error, results) {
