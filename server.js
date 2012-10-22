@@ -82,36 +82,12 @@ app.post('/', function(req, res, next) {
             callback(null, version);
           },
           function(callback) { // Increment cast.json version
-            fs.readFile(path.resolve(repo, 'cast.json'), 'utf8', function(error, data) {
-              if (error) {
-                return callback(error);
-              }
-
-              try {
-                var json = JSON.parse(data);
-              } catch (e) {
-                return callback(e);
-              }
-
-              json.version = version;
-              fs.writeFile(path.resolve(repo, 'cast.json'), render.json.ctbn(json), callback);
-            });
+            var fullPath = path.resolve(repo, 'cast.json');
+            incVersion(fullPath, version, callback);
           },
           function(callback) { // Increment package.json version
-            fs.readFile(path.resolve(repo, 'package.json'), 'utf8', function(error, data) {
-              if (error) {
-                return callback(error);
-              }
-
-              try {
-                var json = JSON.parse(data);
-              } catch (e) {
-                return callback(e);
-              }
-
-              json.version = version;
-              fs.writeFile(path.resolve(repo, 'package.json'), render.json.ctbn(json), callback);
-            });
+            var fullPath = path.resolve(repo, 'package.json');
+            incVersion(fullPath, version, callback);
           },
           function(callback) { // Commit changes
             childProcess.exec('git commit -m "[Deployinating] Inc version" package.json cast.json', opts, callback);
@@ -124,7 +100,7 @@ app.post('/', function(req, res, next) {
           running = false;
 
           if (error) {
-            console.log(error);
+            console.log(error, results);
             next(error);
           }
 
@@ -144,3 +120,20 @@ app.listen(3000, function(error) {
 
   console.log('Started on', port);
 });
+
+function incVersion(file, version, callback) {
+  fs.readFile(file, 'utf8', function(error, data) {
+    if (error) {
+      return callback(error);
+    }
+
+    try {
+      var json = JSON.parse(data);
+    } catch (e) {
+      return callback(e);
+    }
+
+    json.version = version;
+    fs.writeFile(file, render.json.ctbn(json), callback);
+  });
+}
