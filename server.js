@@ -69,6 +69,9 @@ app.post('/', function(req, res, next) {
             });
           },
           function(callback) { // Create bundle
+            childProcess.exec('npm install', opts, callback);
+          },
+          function(callback) { // Create bundle
             childProcess.exec('cast bundles create', opts, callback);
           },
           function(callback) { // Upload bundle to dev server

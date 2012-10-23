@@ -1,6 +1,6 @@
 {
   "name": "cmo-github-hook",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "dependencies": {
     "githubhook": "~0.3.1",
     "async": "~0.1.22",
