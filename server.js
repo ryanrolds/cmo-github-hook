@@ -69,7 +69,7 @@ app.post('/', function(req, res, next) {
             });
           },
           function(callback) { // Create bundle
-            childProcess.exec('npm install', opts, callback);
+            childProcess.exec('$HOME/nvm/v0.6.19/bin/npm install', opts, callback);
           },
           function(callback) { // Create bundle
             childProcess.exec('cast bundles create', opts, callback);
